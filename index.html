@@ -33,7 +33,7 @@
  <br>
 
 <textarea id="tFrame" style="display: none; height:300px; width:600px;" >
-<iframe width="--CMW--px" height="--CMH--px" frameborder="0" allowFullScreen="true" style="max-width:100%" pbi-resize="powerbi" pbi-resize-width="--PRW--" pbi-resize-height="--PRH--" src="--URL--&shareUrl=true"></iframe>
+<iframe width="--CMW--px" height="--CMH--px" frameborder="0" allowFullScreen="true" pbi-resize="powerbi" pbi-resize-width="--PRW--" pbi-resize-height="--PRH--" src="--URL--&shareUrl=true"></iframe>
 <script type="text/javascript">!function(){if("undefined"==typeof powerbiresize){powerbiresize=1;var e=function(){for(var e=document.querySelectorAll("[pbi-resize=powerbi]"),i=0;i<e.length;i++){e[i].style.width="100%";var t=e[i].getAttribute("pbi-resize-width"),r=e[i].getAttribute("pbi-resize-height"),s=e[i].clientWidth,n=t/r,h=!1;if(s<569&&n===16/9)e[i].style.width="568.88px",e[i].style.height="376px",h=!0;else if(s<=437&&n===4/3)e[i].style.width="426.66px",e[i].style.height="376px",h=!0;else if(s<320||r<320&&n!==16/9&&n!==4/3){var p=Math.max(s,320)/n;p<320?(e[i].style.width=320*n+"px",e[i].style.height="376px"):s<320?(e[i].style.width="320px",e[i].style.height=p+56+"px"):(e[i].style.width=s+"px",e[i].style.height=p+56+"px"),h=!0}else e[i].style.width="100%",e[i].style.height=Math.max(e[i].clientWidth/n,320)+56+"px";h&&console.warn("pbi-resize: requested iframe dimension is below the minimum supported dimensions. Minimum supported width is 320px. Minimum supported height is 376px. Change your Power BI report page size to ensure your content looks great when embedded in your web page or blog.")}};window.addEventListener("load",e),window.addEventListener("resize",e)}}();</script>
 </textarea>
 
