@@ -1,0 +1,142 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+}
+
+p, tr {
+	font-size: 15px;
+}
+
+.container {
+	text-align: left;
+	width: 600px;
+}
+
+.page-heading {
+	color: #428bca;
+	font-weight: 100;
+	margin: 40px 0 0 0;
+}
+
+.fa, .fas {
+	padding: 6px 0;
+}
+
+.screen-size-label {
+	color: gray;
+	cursor: pointer;
+}
+
+.screen-size-label.selected {
+	color: #428bca;
+}
+
+.report-heading {
+	color: #428bca;
+	font-size: 20;
+	font-weight: 100;
+	padding: 0 0 10px 0;
+	text-align: left;
+}
+
+.result-heading {
+	color: #428bca;
+	font-size: 20;
+	font-weight: 100;
+	margin-bottom: 10px;
+	text-align: left;
+}
+
+.form-cell-label {
+	padding: 0 15px 15px 0;
+}
+
+.form-cell {
+	padding: 0 0 15px 0;
+}
+
+.dropdown {
+	border-radius: 2px;
+	font-size: 15px;
+	padding: 2px 3px;
+}
+
+.form-input {
+	border: none;
+	border-bottom: 1px solid lightgrey;
+	font-size: 15px;
+	padding: 3px 5px;
+}
+
+.form-input:focus {
+	border-bottom: 1px solid #428bca;
+	outline: none;
+}
+
+.checkbox-input {
+	display: none;
+}
+
+.form-error-msg {
+	color: #d9534f;
+	display: none;
+	font-size: 12px;
+}
+
+.form-error-msg.visible {
+	display: block;
+}
+
+.form-cta-wrapper {
+	display: flex;
+	justify-content: center;
+}
+
+.form-cta {
+	background: none;
+	border: 2px solid #428bca;
+	border-radius: 25px;
+	box-shadow: 1px 1px 5px 0px lightgrey;
+	cursor: pointer;
+	font-size: 15px;
+	min-width: 250px;
+	padding: 10px 15px;
+}
+
+.form-cta:hover {
+	background-color: #428bca;
+	color: #FFF;
+}
+
+.form-cta:focus, .cta-secondary:focus {
+	outline: none;
+}
+
+.cta-secondary {
+	background-color: #FFF;
+	border: none;
+	box-shadow: none;
+	color: #428bca;
+	cursor: pointer;
+	font-size: 15px;
+}
+
+.cta-secondary:hover {
+	color: #000080;
+}
+
+.detail-instructions {
+	width: 100%;
+}
+
+.script-window {
+	overflow-x: scroll;
+}
+
+.mobile-report-form {
+	display: none;
+}
+
+.mobile-report-form.visible {
+	display: block;
+}
