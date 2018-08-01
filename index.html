@@ -107,8 +107,8 @@
 		</div>
 
 		<textarea id="tFrame" style="display: none; height:300px; width:600px;">
-		<script type="text/javascript">
-			 !function(){if("undefined"==typeof window.powerbiresizescript){window.powerbiresizescript=1;var e=function(){var ratio=window.devicePixelRatio||1;var actualWidth=document.body.clientWidth/ratio;for(var iframes=document.querySelectorAll("[pbi-resize=powerbi]"),i=0;i<iframes.length;i++){iframes[i].style.display="block";iframes[i].style.width="100%";var contentMinimumWidth=iframes[i].getAttribute("width");contentMinimumWidth=contentMinimumWidth.substring(0,contentMinimumWidth.length-2);var idealWidth=iframes[i].getAttribute("pbi-resize-width");var idealHeight=iframes[i].getAttribute("pbi-resize-height");var idealAspectRatio=idealWidth/idealHeight;var pbiMaxWidth=iframes[i].getAttribute("pbi-max-width");var pbiMinWidth=iframes[i].getAttribute("pbi-min-width");if(pbiMinWidth<=actualWidth&&actualWidth<=pbiMaxWidth){iframes[i].style.display="block"}
+<script type="text/javascript">
+!function(){if("undefined"==typeof window.powerbiresizescript){window.powerbiresizescript=1;var e=function(){var actualWidth=document.body.clientWidth;for(var iframes=document.querySelectorAll("[pbi-resize=powerbi]"),i=0;i<iframes.length;i++){iframes[i].style.display="block";iframes[i].style.width="100%";var contentMinimumWidth=iframes[i].getAttribute("width");contentMinimumWidth=contentMinimumWidth.substring(0,contentMinimumWidth.length-2);var idealWidth=iframes[i].getAttribute("pbi-resize-width");var idealHeight=iframes[i].getAttribute("pbi-resize-height");var idealAspectRatio=idealWidth/idealHeight;var pbiMaxWidth=iframes[i].getAttribute("pbi-max-width");var pbiMinWidth=iframes[i].getAttribute("pbi-min-width");if(pbiMinWidth<=actualWidth&&actualWidth<=pbiMaxWidth){iframes[i].style.display="block"}
 else{iframes[i].style.display="none"}
 if(contentMinimumWidth==""||contentMinimumWidth<actualWidth){iframes[i].style.width="100%";iframes[i].style.height=Math.max(iframes[i].clientWidth/idealAspectRatio,320)+56+"px"}else{iframes[i].style.width=contentMinimumWidth;iframes[i].style.height=Math.max(iframes[i].clientWidth/idealAspectRatio,320)+56+"px"}}};window.addEventListener("load",e);window.addEventListener("resize",e);window.addEventListener("orientationchange",e)}}()
 </script>
@@ -228,8 +228,7 @@ if(contentMinimumWidth==""||contentMinimumWidth<actualWidth){iframes[i].style.wi
 	if ("undefined" == typeof window.powerbiresizescript) {
 		window.powerbiresizescript = 1;
 		var e = function () {
-			var ratio = window.devicePixelRatio || 1;
-			var actualWidth = document.body.clientWidth / ratio;
+			var actualWidth = document.body.clientWidth;
 			for (var iframes = document.querySelectorAll("[pbi-resize=powerbi]"), i = 0; i < iframes.length; i++) {
 				iframes[i].style.display = "block";
 				iframes[i].style.width = "100%";
@@ -496,48 +495,48 @@ if(contentMinimumWidth==""||contentMinimumWidth<actualWidth){iframes[i].style.wi
 
 		<script type="text/javascript">
 		var runScript = null;
-			!function () {
-	if ("undefined" == typeof window.powerbiresizescript) {
-		window.powerbiresizescript = 1;
-		var e = function () {
-			var actualWidth = document.body.clientWidth;
-			for (var iframes = document.querySelectorAll("[pbi-resize=powerbi]"), i = 0; i < iframes.length; i++) {
-				iframes[i].style.display = "block";
-				iframes[i].style.width = "100%";
-				var contentMinimumWidth = iframes[i].getAttribute("width");
-				contentMinimumWidth = contentMinimumWidth.substring(0, contentMinimumWidth.length - 2);
-				var idealWidth = iframes[i].getAttribute("pbi-resize-width");
-				var idealHeight = iframes[i].getAttribute("pbi-resize-height");
-				var idealAspectRatio = idealWidth / idealHeight;
+		!function () {
+			if ("undefined" == typeof window.powerbiresizescript) {
+				window.powerbiresizescript = 1;
+				var e = function () {
+					var actualWidth = document.body.clientWidth;
+					for (var iframes = document.querySelectorAll("[pbi-resize=powerbi]"), i = 0; i < iframes.length; i++) {
+						iframes[i].style.display = "block";
+						iframes[i].style.width = "100%";
+						var contentMinimumWidth = iframes[i].getAttribute("width");
+						contentMinimumWidth = contentMinimumWidth.substring(0, contentMinimumWidth.length - 2);
+						var idealWidth = iframes[i].getAttribute("pbi-resize-width");
+						var idealHeight = iframes[i].getAttribute("pbi-resize-height");
+						var idealAspectRatio = idealWidth / idealHeight;
 
-				//hide/show reports
-				var pbiMaxWidth = iframes[i].getAttribute("pbi-max-width");
-				var pbiMinWidth = iframes[i].getAttribute("pbi-min-width");
+						//hide/show reports
+						var pbiMaxWidth = iframes[i].getAttribute("pbi-max-width");
+						var pbiMinWidth = iframes[i].getAttribute("pbi-min-width");
 
-				if (pbiMinWidth <= actualWidth && actualWidth <= pbiMaxWidth) {
-					iframes[i].style.display = "block";
-				}
-				else {
-					iframes[i].style.display = "none";
-				}
+						if (pbiMinWidth <= actualWidth && actualWidth <= pbiMaxWidth) {
+							iframes[i].style.display = "block";
+						}
+						else {
+							iframes[i].style.display = "none";
+						}
 
-				//Add responsive size
-				if (contentMinimumWidth == "" || contentMinimumWidth < actualWidth) {
-					iframes[i].style.width = "100%";
-					iframes[i].style.height = Math.max(iframes[i].clientWidth / idealAspectRatio, 320) + 56 + "px";
-				} else {
-					iframes[i].style.width = contentMinimumWidth;
-					iframes[i].style.height = Math.max(iframes[i].clientWidth / idealAspectRatio, 320) + 56 + "px";
-				}
+						//Add responsive size
+						if (contentMinimumWidth == "" || contentMinimumWidth < actualWidth) {
+							iframes[i].style.width = "100%";
+							iframes[i].style.height = Math.max(iframes[i].clientWidth / idealAspectRatio, 320) + 56 + "px";
+						} else {
+							iframes[i].style.width = contentMinimumWidth;
+							iframes[i].style.height = Math.max(iframes[i].clientWidth / idealAspectRatio, 320) + 56 + "px";
+						}
+					}
+				};
+
+				window.addEventListener("load", e);
+				window.addEventListener("resize", e);
+				window.addEventListener("orientationchange", e);
+				runScript = e;
 			}
-		};
-
-		window.addEventListener("load", e);
-		window.addEventListener("resize", e);
-		window.addEventListener("orientationchange", e);
-		runScript = e;
-	}
-}();
-		</script>
+		}();
+	</script>
 </body>
 </html>
