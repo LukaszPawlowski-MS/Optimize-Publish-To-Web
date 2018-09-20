@@ -6,6 +6,6 @@ Try the code here:
 
 
 Several other projects you might be interested in:
-[Test the performance of your embed codes](https://lukaszpawlowski-ms.github.io/Optimize-Publish-To-Web/Publish to web performance tester.html)
+[Test the performance of your embed codes](https://lukaszpawlowski-ms.github.io/Optimize-Publish-To-Web/Publish%20to%20web%20performance%20tester.html)
 
-[See a protoype of fast load experience](https://lukaszpawlowski-ms.github.io/Optimize-Publish-To-Web/P2W Static Image swap test.html) 
+[See a protoype of fast load experience](https://lukaszpawlowski-ms.github.io/Optimize-Publish-To-Web/P2W%20Static%20Image%20swap%20test.html) 
