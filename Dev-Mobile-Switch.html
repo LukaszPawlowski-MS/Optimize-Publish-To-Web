@@ -1,0 +1,111 @@
+<html>
+<body>
+
+<h1>No mobile view defined</h1>
+<iframe width="600px" height="393.5px" frameborder="0" allowFullScreen="true" pbi-resize="powerbi" pbi-resize-width="16" pbi-resize-height="9" pbi-resize-src="https://app.powerbi.com/view?r=eyJrIjoiZDZlYmM1ZTQtYTBkZi00OGYzLThiNmUtMDU5Nzc0NDVjNTIyIiwidCI6IjNkODE4OGM4LTc3NTgtNDYzYy1iYjNmLTBlMTYwZGUzMzYwZiIsImMiOjN9" src="https://app.powerbi.com/view?r=eyJrIjoiZDZlYmM1ZTQtYTBkZi00OGYzLThiNmUtMDU5Nzc0NDVjNTIyIiwidCI6IjNkODE4OGM4LTc3NTgtNDYzYy1iYjNmLTBlMTYwZGUzMzYwZiIsImMiOjN9&shareUrl=true"></iframe>
+
+<h1>Mobile view defined</h1>
+<iframe width="600px" height="393.5px" frameborder="0" allowFullScreen="true" pbi-resize="powerbi" pbi-resize-width="16" pbi-resize-height="9" pbi-resize-min-width="800" pbi-resize-src="https://app.powerbi.com/view?r=eyJrIjoiZDZlYmM1ZTQtYTBkZi00OGYzLThiNmUtMDU5Nzc0NDVjNTIyIiwidCI6IjNkODE4OGM4LTc3NTgtNDYzYy1iYjNmLTBlMTYwZGUzMzYwZiIsImMiOjN9"
+pbi-resize-m-width="4" pbi-resize-m-height="3" pbi-resize-m-src="https://app.powerbi.com/view?r=eyJrIjoiODc4ZjNjNzItZDE5ZC00NTkxLWEwNTEtNzc5OTI3ZTA4NWUxIiwidCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsImMiOjV9"
+src="https://app.powerbi.com/view?r=eyJrIjoiZDZlYmM1ZTQtYTBkZi00OGYzLThiNmUtMDU5Nzc0NDVjNTIyIiwidCI6IjNkODE4OGM4LTc3NTgtNDYzYy1iYjNmLTBlMTYwZGUzMzYwZiIsImMiOjN9&shareUrl=true"></iframe>
+
+
+<script type="text/javascript">
+var runScript = null;
+!function(){
+    //return;
+    if("undefined"==typeof powerbiresize){
+        powerbiresize=1;
+        var e=function(){
+            for(var e=document.querySelectorAll("[pbi-resize=powerbi]"),i=0;i<e.length;i++){
+                e[i].style.width= "100%";
+                var w = e[i].getAttribute("pbi-resize-width");
+                var h = e[i].getAttribute("pbi-resize-height");
+		var wMin = e[i].getAttribute("pbi-resize-min-width");
+		var srcW = e[i].getAttribute("pbi-resize-src");
+
+                var wM = e[i].getAttribute("pbi-resize-m-width");
+                var hM = e[i].getAttribute("pbi-resize-m-height");
+		var srcM = e[i].getAttribute("pbi-resize-m-src");
+
+		var srcCurrent = e[i].getAttribute("src");
+
+                var aw = e[i].clientWidth;
+		var showMobile = false;
+
+		//show web or mobile view
+		if(aw < wMin && !srcCurrent.includes(srcM))
+		{
+		    srcM = (srcM.includes("&shareUrl=true"))? srcM : srcM + "&ShareUrl=true";
+		    e[i].src = srcM;
+		    srcCurrent = srcM;
+		}
+		else if (aw >= wMin && !srcCurrent.includes(srcW))
+		{
+		    srcW = (srcW.includes("&shareUrl=true"))? srcW : srcW + "&ShareUrl=true";
+		    e[i].src = srcW;
+		    srcCurrent = srcW;
+		}
+
+		showMobile = (srcCurrent.includes(srcM))? true : false;
+		
+                var p = (showMobile)? wM/hM : w/h; 
+		var cH = (showMobile)? hM : h; 
+                var p169 = 16.0/9.0;
+                var p43 = 4.0/3.0;
+                debugger;
+                var warn = false;
+
+                if(aw < 569 && p===p169)
+                {
+                    e[i].style.width = "568.88px";
+                    e[i].style.height = 320 +56+ "px";
+                    warn = true;
+                }
+                else if(aw<=437 && p===p43)
+                {
+                    e[i].style.width = "426.66px";
+                    e[i].style.height = 320 + 56 + "px";
+                    warn = true;
+                }
+                else if (aw < 320 || aw/p < 320 || (cH < 320 && p!==p169 && p!==p43 ) )
+                {
+                    var mh = Math.max(aw,320) / p;
+                    if(mh < 320)
+                    {
+                        e[i].style.width = 320 * p + "px";
+                        e[i].style.height = 320 + 56 + "px";
+                    }
+                    else if (aw < 320)
+                    {
+                        e[i].style.width = 320 + "px";
+                        e[i].style.height = mh + 56 + "px";
+                    }
+                    else
+                    {
+                        e[i].style.width = aw + "px";
+                        e[i].style.height = mh + 56 + "px";
+                    }
+                    warn = true;
+                }
+                else
+                {
+                    e[i].style.width= "100%";
+                    e[i].style.height = Math.max(e[i].clientWidth/p,320)+56+"px";
+                }
+                if(warn){
+                console.warn("pbi-resize: requested iframe dimension is below the minimum supported dimensions. Minimum supported width is 320px. Minimum supported height is 376px. Change your Power BI report page size to ensure your content looks great when embedded in your web page or blog.");
+                }
+                }
+                };
+        window.addEventListener("load",e); 
+        window.addEventListener("resize",e);
+        runScript = e;
+    }
+}();
+</script>
+
+
+
+</body>
+</html>
