@@ -1,371 +1,589 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Optimize Your Power BI Embed Code</title>
+	<title>Optimize Your Power BI Embed Code</title>
+	<meta http-equiv="x-ua-compatible" content="IE=edge" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-<center>
-<h1 id="ifgt">Optimize Your Power BI Embed Code</h1>
-<p>This tool ensures your Power BI publish to web report fits nicely in your web page or blog.</p>
-<br>
-<br>
- <table>
-     <tr><td>Page Width: </td><td><input id="pbirw" value="16"></input></td></tr>
-     <tr><td>Page Height:</td><td><input id="pbirh" value="9"></input></td></tr>
-     <tr><td>Content Minimum Width: </td><td><input id="cmw" value="600"></input></td></tr>
-     <!--<tr><td>Content Minimum Height:</td><td><input id="cmh"></input></td></tr> -->
-     <tr><td>Power BI Embed Url: </td><td><input id="url" style="width:400px;"></input></td></tr>
- </table>
- <br>
- <br>
- <button id="gec" onclick="generateEmbedCode()">Optimize</button>
- <br>
- <br>
- <br>
- <br>
- <a href="#ifgt" onclick="insert('e169');">Example 16:9 report</a> | 
- <a href="#ifgt" onclick="insert('e43');">Example 4:3 report</a> |
- <a href="#ifgt" onclick="insert('ecp');">Example Custom page size report</a> |
- <a href="#ifgt" onclick="insert('reset');">Reset</a>
- <br>
- <br>
- <br>
- <br>
+		<div class="container">
+			<div class="title">
+				<h1 id="ifgt" class="page-heading">Optimize Your Power BI Embed Code</h1>
+				<p>This tool ensures your Power BI publish to web report fits nicely in your web page or blog.</p>
+			</div>
+			<br>
+			<div id="input-tables" class="form-container">
+				<div class="js-input-table">
+					<div class="report-header-container">
+						<h4 class="report-heading">Step 1 - Power BI Report</h4>
+						<p class="required">* indicates a required field</p>
+					</div>
+					<table>
+						<tr>
+							<td>Report dimensions <span class="required">*</span> <span class="info-icon" title="You may enter the page size in pixels e.g. 1280 x 720">&#128712;</span></td>
+						</tr>
+						<tr>
+							<td class="form-cell">
+								<input id="pbirw-1" class="form-input" value="16" type="number" /> x <input id="pbirh-1" class="form-input" value="9" type="number" />
+								<div class="form-error-msg js-page-width-error-msg-1">Enter a page width.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Minimum report width <span class="required">*</span> <span class="info-icon" title="This setting controls the minimum width that the report will shrink to when resizing.">&#128712;</span></td>
+						</tr>
+						<tr id="cmw-row">
+							<td class="form-cell">
+								<input id="cmw-1" class="form-input" value="600" /> Pixels
+								<div class="form-error-msg js-content-min-width-error-msg-1">Enter a content minimum width.</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="form-cell">
+								Is the report using Modern Report Headers? <span class="info-icon" title="This option is found under File -> Options -> Report Settings.&#010;If this is on this script will add 36px to the height of the page to account for the header">&#128712;</span>
+								<input type="checkbox" id="header" class="form-input" checked />
+							</td>
+						</tr>
+						<tr>
+							<td>Power BI Embed Url <span class="required">*</span></td>
+						</tr>
+						<tr>
+							<td>
+								<input id="url-1" class="form-input" style="width:400px;" />
+								<div class="form-error-msg js-url-error-msg-1">Enter a Power BI Embed code.</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="form-cell">
+								<button class="cta-secondary" onclick="insertExampleReport('web', 'e169');">Example 16:9 report</button> |
+								<button class="cta-secondary" onclick="insertExampleReport('web', 'e43');">Example 4:3 report</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="js-input-table mobile-report-form js-mobile-report-form">
+					<div class="report-header-container">
+						<h4 class="report-heading">Step 2 (optional) - Mobile Report <span class="info-icon" title="If you have a mobile version of your report you can enter the embed URL for that page below.&#010;Change the switching point (if needed) to match the width the of your mobile report for best results.">&#128712;</span></h4>
+						<button id="expand-mobile" class="expand-button" onclick="expandButtonListener('mobile-settings', 'expand-mobile')">+</button>
+					</div>
+					<table id="mobile-settings" style="display: none">
+						<tr>
+							<td class="info">If you have a mobile version of your report you can enter the embed URL for that page below.<br>
+								Change the switching point (if needed) to match the width the of your mobile report for best results.</td>
+						<tr>
+							<td>Mobile report dimensions</td>
+						</tr>
+						<tr>
+							<td class="form-cell">
+								<input id="pbirw-2" class="form-input" value="9" type="number" onkeyup="hanldeMobileWidthChange(this)"/> x <input id="pbirh-2" class="form-input" value="16" type="number" />
+								<div class="form-error-msg js-page-width-error-msg-2">Enter a page ratio.</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Page width to switch to mobile report</td>
+						</tr>
+						<tr id="switch-point">
+							<td class="form-cell">
+								<input id="sp-2" class="form-input" value="768" /> Pixels
+								<div class="form-error-msg js-sp-error-msg-2">Enter a Switching Point</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Mobile Power BI Embed Url</td>
+						</tr>
+						<tr>
+							<td class="form-cell">
+								<input id="url-2" class="form-input" style="width:400px;" onchange="showHideListener('mobile-image', 'url-2')"/>
+								<div class="form-error-msg js-url-error-msg-2">Enter a Power BI Embed code.</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="js-input-table loading-exp">
+					<div class="report-header-container">
+						<h4 class="report-heading">Step 3 (optional) - Loading Experience</h4>
+						<button id="expand-other" class="expand-button" onclick="expandButtonListener('other-settings', 'expand-other')">+</button>
+					</div>
+					<table id="other-settings" style="display: none">
+						<tr>
+							<td class="info">
+								<p>A front facing image will show as a placeholder while the report is loading.</p>
+								<p>To use a front facing image you will need to upload a screenshot of the report to your CMS or other hosting environment to get a URL.</p>
+								<p>To create this screenshot in Chrome: right click anywhere in the page and choose inspect -> at the top left of the developer console, click 'Toggle Device Toolbar',
+								then resize the page to the correct width and height, adding 23px to the height to allow for the Power BI bar.</p>
+							</td>
+						<tr>
+						<tr>
+							<td>Front Facing Image Url</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="img-1" class="form-input" style="width:400px;"/>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="form-cell">
+								<button class="cta-secondary" onclick="insertExampleImage('web', 'e169');">Example 16:9 image</button> |
+								<button class="cta-secondary" onclick="insertExampleImage('web', 'e43');">Example 4:3 image</button>
+							</td>
+						</tr>
+						<tr class="hidden-field mobile-image">
+							<td>Mobile Front Facing Image</td>
+						</tr>
+						<tr id="mobileImgRow" class="hidden-field mobile-image">
+							<td class="form-cell">
+								<input id="img-2" class="form-input" style="width:400px;" />
+							</td>
+						</tr>
+						<tr>
+						</tr>
+						<tr class="button-customization">
+							<td>When should the Power BI report start loading behind the placeholder?</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell">
+								<input type="radio" id="page-load" name="load-event" value="page-load" onclick="handleLoadEventChange(this);" checked />
+								<label for="page-load">Immediately</label><br>
+								<input type="radio" id="click" name="load-event" value="click" onclick="handleLoadEventChange(this);" />
+								<label for="click">After the placeholder is clicked</label><br>
+								<input type="radio" id="seconds-timeout" name="load-event" value="seconds-timeout" onclick="handleLoadEventChange(this);" />
+								<label for="seconds-timeout">After some amount of time</label>
+								<div id="seconds-container" style="display: none; margin-left: 90px; height: 10px;">
+									<label for="seconds">Seconds: </label>
+									<input type="number" id="seconds" value="5" style="width: 40px">
+								</div><br>
+								<input type="radio" id="in-view" name="load-event" value="in-view" onclick="handleLoadEventChange(this);" />
+								<label for="in-view">Once the placeholder is scrolled into view</label>
+							</td>
+						</tr>
+						<tr class="button-customization">
+							<td>
+								<h4 class="report-heading">Customize the Click to Interact button</h4>
+							</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell-label">Position</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell">
+								<label for="btn-pos-left">Left: </label>
+								<input type="number" id="btn-pos-left" class="form-input" value="10" style="width:40px" />%<br>
+								<label for="btn-pos-top">Top:  </label>
+								<input type="number" id="btn-pos-top" class="form-input" value="5" style="width:40px" />%
+							</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell-label">Click to Interact text</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell">
+								<input id="waiting-txt" class="form-input" value="Click to Interact!" style="width:400px;" />
+							</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell-label">Loading Report text</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell">
+								<input id="loading-txt" class="form-input" value="Preparing Report..." style="width:400px;" />
+							</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell-label">Report is Ready text</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell">
+								<input id="ready-txt" class="form-input" value="Click to Interact!" style="width:400px;" />
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<br><br>
+			<div class="form-cta-wrapper">
+				<button id="gec" class="form-cta" onclick="generateEmbedCode()">Create my code!</button>
+			</div>
+		</div>
 
-<textarea id="tFrame" style="display: none; height:300px; width:600px;" >
-<iframe width="--CMW--px" height="--CMH--px" frameborder="0" allowFullScreen="true" pbi-resize="powerbi" pbi-resize-width="--PRW--" pbi-resize-height="--PRH--" src="--URL--&shareUrl=true"></iframe>
-<script type="text/javascript">!function(){if("undefined"==typeof powerbiresize){powerbiresize=1;var e=function(){for(var e=document.querySelectorAll("[pbi-resize=powerbi]"),i=0;i<e.length;i++){e[i].style.width="100%";var t=e[i].getAttribute("pbi-resize-width"),s=e[i].getAttribute("pbi-resize-height"),r=e[i].clientWidth,h=t/s,n=!1;if(r<569&&h===16/9)e[i].style.width="568.88px",e[i].style.height="376px",n=!0;else if(r<=437&&h===4/3)e[i].style.width="426.66px",e[i].style.height="376px",n=!0;else if(r<320||r/h<320||s<320&&h!==16/9&&h!==4/3){var o=Math.max(r,320)/h;o<320?(e[i].style.width=320*h+"px",e[i].style.height="376px"):r<320?(e[i].style.width="320px",e[i].style.height=o+56+"px"):(e[i].style.width=r+"px",e[i].style.height=o+56+"px"),n=!0}else e[i].style.width="100%",e[i].style.height=Math.max(e[i].clientWidth/h,320)+56+"px";n&&console.warn("pbi-resize: requested iframe dimension is below the minimum supported dimensions. Minimum supported width is 320px. Minimum supported height is 376px. Change your Power BI report page size to ensure your content looks great when embedded in your web page or blog.")}};window.addEventListener("load",e),window.addEventListener("resize",e)}}();</script>
-</textarea>
+		<textarea id="tFrame" style="display: none; height:300px; width:600px;">
+<script>!function(){if(void 0===window.powerbiresizescript){function L(e,t){if(e)for(var i=0;i<e.children.length;i++)if(e.children[i].tagName.toLowerCase()===t.toLowerCase())return e.children[i];return null}function C(e){if(e){var t=e.parentNode,i=L(t,"div");i&&t.removeChild(i);var r=L(t,"span");r&&t.removeChild(r),e.style.position="static",e.style.visibility="visible";var n=L(t,"img");n&&t.removeChild(n),S()}}function M(e,t){e.setAttribute("data-state",t);for(var i=[{state:"waiting",text:e.getAttribute("pbi-resize-wait-txt")},{state:"loading",text:e.getAttribute("pbi-resize-load-txt")},{state:"loadingnow",text:e.getAttribute("pbi-resize-load-txt")},{state:"ready",text:e.getAttribute("pbi-resize-rdy-txt")},{state:"readynow",text:e.getAttribute("pbi-resize-load-txt")}],r="",n=0;n<i.length;n++)i[n].state===t&&(r=i[n].text);var a=L(e,"span");switch(e.innerHTML=r+a.outerHTML,t){case"loading":e.onclick=function(){M(e,"loadingnow")},e.parentNode.onclick=function(){M(e,"loadingnow")};break;case"readynow":S(),C(L(e.parentNode,"iframe"));break;case"ready":S(),(a=L(e,"span")).style.display="none",e.style.width="auto",e.onclick=function(e){C(L(e.target.parentNode,"iframe"))},e.parentNode.onclick=function(e){C(L(e.target.parentNode,"iframe"))}}}window.powerbiresizescript=1,window.onmessage=function(e){if(function(e){try{if("reportPageLoaded"==JSON.parse(e.data).event)return!0}catch(e){return}}(e)){var t=function(e){for(var t=document.getElementsByTagName("iframe"),i=0;i<t.length;i++)if(t[i].contentWindow===e)return t[i]}(e.source);setTimeout(function(){if(t&&1<t.parentNode.children.length)switch(t.parentNode.getAttribute("pbi-resize-load-event")){case"click":C(t);break;case"page-load":case"seconds-timeout":case"in-view":var e=L(t.parentNode,"div");"loadingnow"===e.getAttribute("data-state")?M(e,"readynow"):M(e,"ready")}},1e3*(t.parentNode.getAttribute("pbi-resize-delay-show")||1))}};var e=function(){for(var e=document.querySelectorAll('[pbi-resize="powerbi"]'),i=0;i<e.length;i++){e[i].style.width="100%";var r=e[i].clientWidth,n=e[i].getAttribute("pbi-resize-min-width"),a=(e[i].getAttribute("height"),e[i].getAttribute("pbi-resize-img")),o=e[i].getAttribute("pbi-resize-m-img"),s=e[i].getAttribute("pbi-resize-width"),d=e[i].getAttribute("pbi-resize-height"),l=e[i].getAttribute("pbi-resize-src"),c=e[i].getAttribute("pbi-resize-m-width"),p=e[i].getAttribute("pbi-resize-m-height"),u=e[i].getAttribute("pbi-resize-m-src"),g=e[i].getAttribute("pbi-resize-load-event"),h=e[i].getAttribute("pbi-resize-header"),b=L(e[i],"img"),w=L(e[i],"iframe"),m=w?w.getAttribute("src"):null,f=c/p,v=s/d,y=n<r,x=l&&u?y?l:u:l,A=(w&&w.src==u||b&&b.src==o)&&y,z=(w&&w.src==l||b&&b.src==a)&&!y,N=1<e[i].children.length;if(!m){if(w&&(w.style.position="absolute",w.style.top=0,w.style.left=0,w.style.visibility="hidden"),b&&b.setAttribute("src",!y&&o?o:a),!a&&l&&y||!o&&u&&!y){w.setAttribute("src",!y&&u?u:l),C(w),S();break}if(a&&l||o&&u){var E=L(e[i],"div");switch(M(E,"waiting"),g){case"page-load":W(w.parentNode,x);break;case"seconds-timeout":var k=1e3*parseInt(e[i].getAttribute("pbi-resize-seconds"));t=setTimeout(function(){W(w.parentNode,x)},k);break;case"in-view":N&&!w.src&&H(b)&&W(w.parentNode,x),window.addEventListener("scroll",function(){N&&!w.src&&H(b)&&W(w.parentNode,x)},!1);break;case"click":E.onclick=function(){W(w.parentNode,x)},e[i].firstChild.onclick=function(){W(w.parentNode,x)}}}}m==a&&!a&&l&&y||m==o&&!o&&u&&!y?C(w):(z||A)&&I(e[i].children[0],y,N?a:l,N?o:u,x),N&&(z&&!o&&u||A&&!a&&l)?C(w):!N&&(z&&o&&!u||A&&a&&!l)&&C(w),b&&T(b,h,r,y,v,f,d,p),w&&T(w,h,r,y,v,f,d,p)}};function T(e,t,i,r,n,a,o,s){var d=!1;if(a&&s)var l=r?n:a,c=r?o:s;else l=n,c=o;var p="true"==t.toLowerCase()?36:56;if(i<569&&l===16/9)e.parentNode.style.width="568.88px",e.style.width="568.88px",e.style.height=320+p+"px",d=!0;else if(i<=437&&l===4/3)e.parentNode.style.width="426.66px",e.style.width="426.66px",e.style.height=320+p+"px",d=!0;else if(i<320||i/l<320||c<320&&l!==16/9&&l!==4/3){var u=Math.max(i,320)/l;u<320?(e.parentNode.style.width=320*l+"px",e.style.width=320*l+"px",e.style.height=320+p+"px"):(i<320?(e.parentNode.style.width="320px",e.style.width="320px"):(e.parentNode.style.width=i+"px",e.style.width=i+"px"),e.style.height=u+p+"px"),d=!0}else e.parentNode.style.width="100%",e.style.width="100%",e.style.height=Math.max(e.clientWidth/l,320)+p+"px";d&&console.warn("pbi-resize: requested iframe dimension is below the minimum supported dimensions. Minimum supported width is 320px. Minimum supported height is 376px. Change your Power BI report page size to ensure your content looks great when embedded in your web page or blog.")}function H(e){var t=e.getBoundingClientRect();return 0<=t.top&&0<=t.left&&t.bottom<=(window.innerHeight||document.documentElement.clientHeight)&&t.right<=(window.innerWidth||document.documentElement.clientWidth)}function I(e,t,i,r,n){if(i&&r){var a=e.nextElementSibling;e instanceof HTMLImageElement&&a.src&&n!=a.src&&(a.setAttribute("src",n),M(a.nextElementSibling,"loading"));var o=t?i:r;e.setAttribute("src",o)}}function S(){if(-1!==navigator.userAgent.indexOf("MSIE")||0<navigator.appVersion.indexOf("Trident/")){var e=document.createEvent("UIEvents");e.initUIEvent("resize",!0,!1,window,0),window.dispatchEvent(e)}else window.dispatchEvent(new Event("resize"))}function W(e,t){var i=L(e,"iframe"),r=L(e,"div");L(r,"span").style.display="block";var n=document.createElement("style");n.type="text/css";n.innerHTML="@keyframes pbi-resize-spinner {                0% {                    transform: rotate(0deg);                }                100% {                    transform: rotate(360deg);                }            }",document.getElementsByTagName("head")[0].appendChild(n),i.setAttribute("src",t),i.setAttribute("frameborder","0"),i.setAttribute("allowFullScreen","true"),M(r,"loading")}document.addEventListener("DOMContentLoaded",e),window.addEventListener("resize",e),window.addEventListener("orientationchange",e)}}();</script>
+		</textarea>
+		<div id="outputContainer" style="display: none; width:70%; margin: auto;">
+			<br>
+			<h4 class="result-heading">Your Optimized Embed Code</h4>
+			<p style="text-align: left;">(copy and paste it into your web page)</p>
+			<textarea id="oFrame" style="display: inline-block; height:220px; width: 100%;" onclick="this.select()"></textarea>
+			<br>
+			<br>
+			<br>
+			<div class="form-cta-wrapper">
+				<button class="form-cta" onclick="showResult();">Show me how it looks</button>
+				<br>
+				<br>
+			</div>
+			<br>
+			<div id="result"></div>
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
 
-<div id="outputContainer" style="display: none; width: 100%;">
-<h2>Your optimized embed code</h2>
-<p>(copy and paste it into your web page)</p>
- <textarea id="oFrame" style="display: inline-block; height:220px; width:70%;" onclick="this.select()" ></textarea>
+		<script type="text/javascript">
+			var reportCount = 1;
 
+			function addTextInputListener(inputId, errorMsgIdentifier) {
+				document.getElementById(inputId).addEventListener("focus", function () {
+					var errorMsg = document.getElementsByClassName(errorMsgIdentifier)[0];
+					if(errorMsg && errorMsg.classList.contains("visible")) {
+						errorMsg.classList.remove("visible");
+					}
+				});
+			};
 
-<br>
-<br>
-<button onclick="showResult();">Show me how it looks</button>
-<br>
-<br>
-<div id="result" style="width: 70%; height:auto;"></div>
+			// Desktop input listeners
+			addTextInputListener('pbirw-1', 'js-page-width-error-msg-1');
+			addTextInputListener('pbirh-1', 'js-page-height-error-msg-1');
+			addTextInputListener('cmw-1', 'js-content-min-width-error-msg-1');
+			addTextInputListener('img-1', 'js-url-error-msg-1');
+			addTextInputListener('url-1', 'js-url-error-msg-1');
 
-</div>
-<br>
-<br>
-<br>
-    <a href="#i" onclick="showInstructions();">show instructions</a>
-<br>
-<br>
-<br>
- </center>
+			// Mobile input listeners
+			addTextInputListener('pbirw-2', 'js-page-width-error-msg-2');
+			addTextInputListener('pbirh-2', 'js-page-height-error-msg-2');
+			addTextInputListener('sp-2', 'js-sp-error-msg-2');
+			addTextInputListener('img-2', 'js-url-error-msg-2');
+			addTextInputListener('url-2', 'js-url-error-msg-2');
 
-<div id="instructions" style="display: none; background-color: #FFF2F2; width: 100%;">
-<h1 id="i">Instructions</h1>
-<p>The iFrame below is sized to optimally fit its the container, based on first page <b>proportion</b>.</p>
-<p><b>Before You Start</b>
-<ul>
-    <li>Get the report <b>Page Width</b> and <b>Page Height</b> of your report page. Select the page in Power BI desktop or when editing the report in PowerBI.com then find the <b>Page Size</b> properties.</li>
-    <br>
-    <img alt="PageSize-Image" src="data:image/png;base64,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">
-    <br><br>
-    <li>Determine the <b>Content Minimum Width</b>, this is the smallest width at which your content will be presented. If you're syndicating your content, this will be the size of the content if the syndication engine removes the provided JavaScript. You can get this width from your web page team, they might refer to it as the column width. If you don't know this, use 600px or 800px.</li>
-    <blockquote>
-        <p><b>Important:</b>The minimum iFrame widths are as follows. If your Content Minimum Width is lower than these, change your page size in your Power BI file. When working with smaller iFrames, using the "custom" page size option, then setting the page height and width to 800px x 800px or 900px x 900px (square) often works well across devices and form factors.</p>
-        <ul>
-            <li>For 16:9 page size, the minimum iFrame width is 568.88px.</li>
-            <li>For 4:3 page size, the minimum iFrame width is 426.66px.</li>
-            <li>The absolute minimum iFrame width is 320px.</li>
-            <li>The absolute minimum iFrame height is 376px, which allows 320px for report content and 56px for the Power BI bottom bar.
-            </li>
-        </ul>
-        <p>The iFrame code will ensure the minimum sizes are enforced, potentially resulting in Power BI Content being cut off in your page. Adjust the page size in the report file to get narrower iFrames, down to the limit of 320px wide.</p>
-        <p>Power BI scales your report to fit the available space in the iFrame. This will scale your content proportionally based on iFrame size. The page size in your report adjust how big the fonts and UI contols appear within the available space. For example, if most of your users consume the content on mobile, setting a smaller page size will make the content more readable.</p>
-    </blockquote>
-    <br>
-    <li>Get the <b>Power BI Embed Code</b> for your Power BI report. <a href="https://powerbi.microsoft.com/en-us/documentation/powerbi-learning-6-6-publish-to-web/">Here's how.</a></li>
-    <br>
-    <li>Copy the optimized embed code and paste it into your HTML page.</li>
-    <br>
-    <li>Some content management systems don't allow the JavaScript to run. The minimum content width you specify will be used to size the report in this case.</li>
-    <br>
-    <li>The optimized embed code also shares your web page's URL when the user presses the 'Share' button in Power BI's tool bar. This drives more traffic to your page. Neat.</li>
-</ul>
-</p>
-<br><br>
+			function showHideListener(inputClass, dependentId) {
+				var elements = document.getElementsByClassName(inputClass);
+				var dependentElement = document.getElementById(dependentId);
+				for(let i = 0; i < elements.length; i++) {
+					if(dependentElement.value) {
+						elements[i].style.display = 'table-row';
+					}
+					else {
+						elements[i].style.display = 'none';
+					}
+				}
+			}
 
-<center>
-    <a href="#di" onclick="showDetailInstructions();">how it works</a>
-</center>
+			function expandButtonListener(tableId, buttonId) {
+				var table = document.getElementById(tableId);
+				var button = document.getElementById(buttonId);
+				if(table.classList.contains('visible')) {
+					table.style.display = 'none';
+					table.classList.remove('visible');
+					button.innerHTML = '+';
+				}
+				else {
+					table.style.display = 'table';
+					table.classList.add('visible');
+					button.innerHTML = '-';
+				}
+			}
 
-<div id="detailInstructions" style="display: none;">
-<h1>Technical Details</h1>
-<p>Start with the report page width and height. Use it to create a proportion as follows:</p>
-<blockquote style="background-color: #FFF2D0;">
-    <b>Proportion</b> = (Report Page <b>Height</b>)/(Report Page <b>Width</b>)   
-</blockquote>
+			function hanldeMobileWidthChange(e) {
+				var switchPoint = document.getElementById('sp-2');
+				switchPoint.value = e.value;
+			}
 
-<ul>
-    <li>If your page size is set to 16:9, the proportion is <b>0.5625</b></li>
-    <li>If your page size is set to 4:3, the proportion is <b>0.75</b></li>
-    <li>If you set a specific page size, you'll need to calulate the proportion</li>
-</ul>
+			function validateTextField(input, fieldIdentifier, errors) {
+				var errorMsg = document.getElementsByClassName(fieldIdentifier)[0];
+				if (input === "") {
+					errorMsg.classList.add("visible");
+					errors = true;
+				} else {
+					//errorMsg.classList.remove("visible");
+				}
+				return errors;
+			}
 
-<p>Now, calculate the iFrame <b>Content Minimum Height</b> as follows:</p>
-<blockquote style="background-color: #FFF2D0;">
-<b>Content Minimum Height</b> = (Content Minimum Width) * (Proportion) + 56
-</blockquote>
+			function clearResultSections() {
+				var oFrameElement = document.getElementById("oFrame");
+				oFrameElement.value = "";
 
-<ul>
-    <li>Adding 56 provides room for the Power BI bottom bar.</li>
-    </ul>
+				var result = document.getElementById("result");
+				result.innerHTML = "";
 
-<p>Annotate your iFrame as follows:
-    <ol>
-        <li>set the iframe width attribute to the <b>Content Minimum Width</b>: <b>width="600px"</b> <i>Note: add 'px' to the number to indicate pixels</i>
-        <li>set the iframe height attribute to the <b>Content Minimum Height</b>: <b>height="393.5px"</b> <i>Note: the example assumes a 16:9 width:height ratio</i>
-        <li>add the attribute: <b>pbi-resize="powerbi"</b></li>
-        <li>add the attribute: <b>pbi-resize-width="pageWidth"</b></li>
-        <li>add the attribute: <b>pbi-resize-height="pageHeight"</b></li>
-        <li>append the shareUrl query string parameter to the iFrame <b>src</b> Url: <b>&shareUrl=true</b>
-        <li>add the JavaScript specified below to the page.</li>
-    </ol>
-</p>
+				var outputContainerElement = document.getElementById("outputContainer");
+				outputContainerElement.style.display = 'none';
+			}
 
-<h3 id="rjs">Required JavaScript</h3>
-<p>Place the following JavaScript on the page.</p>
-<blockquote style="background-color: #FFF2D0;">
-<pre>
-&lt;script type="text/javascript">
-!function(){
-    //return;
-    if("undefined"==typeof powerbiresize){
-        powerbiresize=1;
-        var e=function(){
-            for(var e=document.querySelectorAll("[pbi-resize=powerbi]"),i=0;i&lt;e.length;i++){
-                e[i].style.width= "100%";
+			function generateEmbedCode() {
+				var errors = false;
+				var outputContainerElement = document.getElementById("outputContainer");
+				var oFrameElement = document.getElementById("oFrame");
+				var template = document.getElementById("tFrame").value;
 
-                var w = e[i].getAttribute("pbi-resize-width");
-                var h = e[i].getAttribute("pbi-resize-height");
-                var aw = e[i].clientWidth;
-                var p = w/h; 
-                var p169 = 16.0/9.0;
-                var p43 = 4.0/3.0;
+				clearResultSections();
 
-                debugger;
+				//Get inputs
+				var webWidth = document.getElementById('pbirw-1').value;
+				var webHeight = document.getElementById('pbirh-1').value;
+				var webImg = document.getElementById('img-1').value;
+				var webSrc = document.getElementById('url-1').value;
+				var cmw = document.getElementById('cmw-1').value;
+				var cmh = cmw * webWidth / webHeight + 56;
+				var loadEvent = document.querySelector('input[name="load-event"]:checked').value;
+				var header = document.getElementById('header').checked;
+				var btnLeftPos = document.getElementById('btn-pos-left').value;
+				var btnTopPos = document.getElementById('btn-pos-top').value;
+				var waitingText = document.getElementById('waiting-txt').value;
+				var loadingText = document.getElementById('loading-txt').value;
+				var readyText = document.getElementById('ready-txt').value;
 
-                var warn = false;
+				var mobileImg = document.getElementById('img-2').value;
 
-                if(aw &lt; 569 && p===p169)
-                {
-                    e[i].style.width = "568.88px";
-                    e[i].style.height = 320 +56+ "px";
-                    warn = true;
+				// Do form validation
+				errors = validateTextField(webWidth, 'js-page-width-error-msg-1', errors);
+				errors = validateTextField(webHeight, 'js-page-height-error-msg-1', errors);
+				if(!webImg && !webSrc) {
+					errors = validateTextField(webSrc, 'js-url-error-msg-1', errors);
+				}
+
+				var mobileSrc = document.getElementById('url-2').value;
+				var mobileWidth = document.getElementById('pbirw-2').value;
+				var mobileHeight = document.getElementById('pbirh-2').value;
+				var switchPoint = document.getElementById('sp-2').value;
+				var cmh = switchPoint * mobileWidth / mobileHeight + 56;
+				var img = window.innerWidth < switchPoint && mobileImg ? mobileImg : webImg;
+				var url = window.innerWidth < switchPoint && mobileSrc ? mobileSrc : webSrc;
+
+				//Do form validation for mobile
+				if(document.getElementById('mobile-settings').classList.contains('visible')) {
+					errors = validateTextField(switchPoint, 'js-sp-error-msg-2', errors);
+				}
+				errors = validateTextField(cmw, 'js-content-min-width-error-msg-1', errors);
+
+				//replace placeholders with input variables for output
+				if (!errors) {
+
+					var container = document.createElement('div');
+					container.setAttribute('pbi-resize', 'powerbi');
+					if (webImg) {
+						container.setAttribute('pbi-resize-img', webImg);
+						var img = document.createElement('img');
+					}
+					if (webSrc) {
+						container.setAttribute('pbi-resize-src', webSrc);
+						var iframe = document.createElement('iframe');
+					}
+					container.setAttribute('pbi-resize-min-width', cmw);
+					container.setAttribute('pbi-default-width', '600px');
+					container.setAttribute('pbi-default-height', cmh);
+					container.setAttribute('pbi-resize-width', webWidth);
+					container.setAttribute('pbi-resize-height', webHeight);
+					container.setAttribute('pbi-resize-src', webSrc);
+					container.setAttribute('pbi-resize-load-event', loadEvent);
+					if(loadEvent == "seconds-timeout") {
+						container.setAttribute('pbi-resize-seconds', document.getElementById('seconds').value);
+					}
+					container.setAttribute('pbi-resize-header', header);
+					container.style.position = 'relative';
+
+					if(mobileImg || mobileSrc) {
+						if(mobileImg) {
+							container.setAttribute('pbi-resize-m-img', mobileImg);
+							if(!img) {
+								var img = document.createElement('img');
+							}
+						}
+						if(mobileSrc) {
+							container.setAttribute('pbi-resize-m-src', mobileSrc);
+						}
+						container.setAttribute('pbi-resize-m-width', mobileWidth);
+						container.setAttribute('pbi-resize-m-height', mobileHeight);
+						container.setAttribute('pbi-resize-min-width', switchPoint);
+					}
+
+					if (img) {
+						container.appendChild(img);
+					}
+					if (iframe) {
+						iframe.setAttribute('frameborder', 0);
+						iframe.setAttribute('allowFullScreen', true);
+						container.appendChild(iframe);
+					}
+					if(img && iframe) {
+						var button = document.createElement('div');
+						img.setAttribute('onmouseover', "style.opacity = .9");
+						img.setAttribute('onmouseout', "style.opacity = 1");
+						img.style.cursor = 'pointer';
+						button.style.display = 'flex';
+						button.style.justifyContent = 'space-between';
+						button.style.lineHeight = '32px';
+						button.style.backgroundColor = 'transparent';
+						button.style.position = 'absolute';
+						button.style.left = btnLeftPos + '%';
+						button.style.top = btnTopPos + '%';
+						button.style.marginLeft = 'auto';
+						button.style.marginRight = 'auto';
+						button.style.color = 'black';
+						button.style.padding = '10px';
+						button.style.cursor = 'pointer';
+						button.style.border = 'rgb(50, 50, 50, 1) 2px solid';
+						button.setAttribute('pbi-resize-wait-txt', waitingText);
+						button.setAttribute('pbi-resize-load-txt', loadingText);
+						button.setAttribute('pbi-resize-rdy-txt', readyText);
+						button.setAttribute('onmouseover', "style.backgroundColor = 'rgb(200, 200, 200)'");
+						button.setAttribute('onmouseout', "style.backgroundColor = 'transparent'");
+						var spinner = document.createElement('span');
+						spinner.classList.add('pbi-resize-spinner');
+						spinner.style.display = 'none';
+						spinner.style.width = '25px';
+						spinner.style.height = '25px';
+						spinner.style.margin = '1px';
+						spinner.style.marginLeft = '8px';
+						spinner.style.borderRadius = '50%';
+						spinner.style.border = '2px solid #000';
+						spinner.style.borderColor = '#000 transparent #000 transparent';
+						spinner.style.animation = 'pbi-resize-spinner 1.2s linear infinite';
+
+						button.appendChild(spinner);
+						container.appendChild(button);
+					}
+
+					var output = container.outerHTML;
+					oFrameElement.value = output += template;
+					outputContainerElement.style.display = '';
+				}
+			};
+
+			function removeExcessForms(formsRemaining) {
+                var form = document.getElementsByClassName("js-mobile-report-form")[0];
+                if (form.classList.contains("visible")) {
+                    var mobileReportToggle = document.getElementById("mobile-report-toggle");
+                    mobileReportToggle.innerText = 'Remove Mobile Report';
+                    reportCount--;
                 }
-                else if(aw&lt;=437 && p===p43)
-                {
-                    e[i].style.width = "426.66px";
-                    e[i].style.height = 320 + 56 + "px";
-                    warn = true;
-                }
-                else if (aw &lt; 320 || aw/p &lt; 320  || (h &lt; 320 && p!==p169 && p!==p43 ))
-                {
-                    var mh = Math.max(aw,320) / p;
+			}
 
-                    if(mh &lt; 320)
-                    {
-                        e[i].style.width = 320 * p + "px";
-                        e[i].style.height = 320 + 56 + "px";
-                    }
-                    else if (aw &lt; 320)
-                    {
-                        e[i].style.width = 320 + "px";
-                        e[i].style.height = mh + 56 + "px";
-                    }
-                    else
-                    {
-                        e[i].style.width = aw + "px";
-                        e[i].style.height = mh + 56 + "px";
-                    }
-                    warn = true;
-                }
-                else
-                {
-                    e[i].style.width= "100%";
-                    e[i].style.height = Math.max(e[i].clientWidth/p,320)+56+"px";
-                }
+			function insertExampleReport(size, example) {
+				var sn = "https://app.powerbi.com/view?r=eyJrIjoiZDZlYmM1ZTQtYTBkZi00OGYzLThiNmUtMDU5Nzc0NDVjNTIyIiwidCI6IjNkODE4OGM4LTc3NTgtNDYzYy1iYjNmLTBlMTYwZGUzMzYwZiIsImMiOjN9";
+				var ft = "https://app.powerbi.com/view?r=eyJrIjoiNmVmZjNhNDAtYjMxOC00YjZjLWJjNDQtMTViZjM5MDZhNmVhIiwidCI6Ijk0MjYwZjAzLTA3OTMtNDg0YS05MWNmLWJlYmU1ODQzMTliYyIsImMiOjEwfQ%3D%3D";
+				var msn = "https://app.powerbi.com/view?r=eyJrIjoiZmUxMjlmNmYtYjY4NC00YWE1LTkyZmMtMmI2ZjVjZGI1NTYyIiwidCI6Ijk0MjYwZjAzLTA3OTMtNDg0YS05MWNmLWJlYmU1ODQzMTliYyIsImMiOjEwfQ%3D%3D";
+				var mft = "https://app.powerbi.com/view?r=eyJrIjoiODc4ZjNjNzItZDE5ZC00NTkxLWEwNTEtNzc5OTI3ZTA4NWUxIiwidCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsImMiOjV9";
 
-                if(warn){
-                console.warn("pbi-resize: requested iframe dimension is below the minimum supported dimensions. Minimum supported width is 320px. Minimum supported height is 376px. Change your Power BI report page size to ensure your content looks great when embedded in your web page or blog.");
-                }
-                }
-                };
+				removeExcessForms(1);
 
-        window.addEventListener("load",e); 
-        window.addEventListener("resize",e);
-    }
-}();
-&lt;/script>  
-</pre>
-</blockquote>
+				if(size == 'web') {
+					switch (example) {
+					case "e169":
+						writeExample('url-1', size, "600", "16:9", 16, 9, sn, false);
+						break;
+					case "e43":
+						writeExample('url-1', size, "600", "4:3", 4, 3, ft, true);
+						break;
+					}
+				}
+				else {
+					switch (example) {
+					case "e169":
+						writeExample('url-2', size, null, "9:16", 9, 16, msn);
+						break;
+					case "e43":
+						writeExample('url-2', size, null, "3:4", 3, 4, mft);
+						break;
+					}
+				}
+			}
 
-</div>
+			function insertExampleImage(size, example) {
+				var sn = window.location + "16x9.png";
+				var ft = window.location + "4x3.png";
+				var ns = window.location + "9x16.png";
+				var tf = window.location + "3x4.png";
 
-<script type="text/javascript">
-    function generateEmbedCode()
-    {
-        //debugger;
-        var cmw = document.getElementById("cmw").value;
-        var pbirw = document.getElementById("pbirw").value;
-        var pbirh = document.getElementById("pbirh").value;
-        var cmh = cmw * pbirh / pbirw + 56;
-        var url = document.getElementById("url").value;
-        var template = document.getElementById("tFrame").value;
-        var oFrameElement = document.getElementById("oFrame");
-        var outputContainerElement = document.getElementById("outputContainer");
+				removeExcessForms(1);
 
-        if(url === "")
-        {
-            alert("Please provide a Power BI Embed code.");
-            return;
-        }
+				if(size == 'web') {
+					let elements = document.getElementsByClassName('button-customization');
+					for(let i = 0; i < elements.length; i++) {
+						elements[i].style.display = 'table-row';
+					}
+					switch (example) {
+					case "e169":
+						writeExample('img-1', size, "600", "16:9", 16, 9, sn);
+						break;
+					case "e43":
+						writeExample('img-1', size, "600", "4:3", 4, 3, ft);
+						break;
+					}
+				}
+				else {
+					switch (example) {
+					case "e169":
+						writeExample('img-2', size, null, "16:9", 9, 16, ns);
+						break;
+					case "e43":
+						writeExample('img-2', size, null, "4:3", 3, 4, tf);
+						break;
+					}
+				}
+			}
 
-        var output = template
-                    .replace("--CMW--", cmw)
-                    .replace("--CMH--", cmh)
-                    .replace("--PRW--", pbirw)
-                    .replace("--PRH--", pbirh)
-                    .replace("--URL--", url);
+			function writeExample(id, size, contentMinimumWidth, pageSizeRatio, pageWidth, pageHeight, url, modernheaders) {
+				document.getElementById("outputContainer").style.display = 'none';
 
-        oFrameElement.value = output;
-        outputContainerElement.style.display = 'inline-block';
+				var editState = true;
+				if (pageSizeRatio === "Custom") {
+					editState = false;
+				}
 
-    };
+				document.getElementById("header").checked = modernheaders;
 
-    function insert(example)
-    {
-        var sn = "https://app.powerbi.com/view?r=eyJrIjoiZDZlYmM1ZTQtYTBkZi00OGYzLThiNmUtMDU5Nzc0NDVjNTIyIiwidCI6IjNkODE4OGM4LTc3NTgtNDYzYy1iYjNmLTBlMTYwZGUzMzYwZiIsImMiOjN9";
-        var ft = "https://app.powerbi.com/view?r=eyJrIjoiODc4ZjNjNzItZDE5ZC00NTkxLWEwNTEtNzc5OTI3ZTA4NWUxIiwidCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsImMiOjV9";
-        var cps = "https://app.powerbi.com/view?r=eyJrIjoiNjZlOWZlMmMtMjE2ZS00OTM5LWFmYTAtNmI4MjBlNjk3NDg2IiwidCI6IjNlN2ZjNjM1LTkxOTAtNDFmMC04MDZiLWI4OWIwZmJkNzU5ZSIsImMiOjF9";
+				if(size == 'web'){
+					var pbirw = document.getElementById("pbirw-1");
+					pbirw.value = pageWidth;
 
-        switch(example) 
-        {
-            case "e169":
-                writeExample("600", 16, 9, sn);
-                break;
-            case "e43":
-                writeExample("600", 4, 3, ft);
-                break;
-            case "ecp":
-                writeExample("600", 900, 930, cps);
-                break;
-            case "reset":
-            
-                writeExample("600", 16, 9, "");
-                document.getElementById("result").innerHTML = "";
-                document.getElementById("outputContainer").style.display = 'none';
+					var pbirh = document.getElementById("pbirh-1");
+					pbirh.value = pageHeight;
 
-                break;
-        }
+					document.getElementById("cmw-1").value = contentMinimumWidth;
+					document.getElementById(id).value = url;
+				}
+				else {
+					var pbirw = document.getElementById("pbirw-2");
+					pbirw.value = pageWidth;
 
-    }
+					var pbirh = document.getElementById("pbirh-2");
+					pbirh.value = pageHeight;
 
-    function writeExample(contentMinimumWidth, pageWidth, PageHeight, embedCode)
-    {
-        document.getElementById("cmw").value = contentMinimumWidth;
-        document.getElementById("pbirw").value = pageWidth;
-        document.getElementById("pbirh").value = PageHeight;
-        document.getElementById("url").value = embedCode;
-        document.getElementById("oFrame").value = "";
-    }
-    function showResult(){
+					document.getElementById(id).value = url;
+				}
 
-        document.getElementById("result").innerHTML = document.getElementById("oFrame").value;
-        runScript();
+				document.getElementById("oFrame").value = "";
+			}
 
-    }
-    function showInstructions()
-    {
-        debugger;
-        //document.getElementById("instructions").style = "display: inline-block; background-color: #FFF2F2;";
-        document.getElementById("instructions").style.display = 'inline-block';
-    }
-    function showDetailInstructions()
-    {
-        document.getElementById("detailInstructions").style.display = 'inline-block';
-    }
-</script>
+			function showResult() {
+				document.getElementById("result").innerHTML = document.getElementById("oFrame").value;
 
-<script type="text/javascript">
-var runScript = null;
-!function(){
-    //return;
-    if("undefined"==typeof powerbiresize){
-        powerbiresize=1;
-        var e=function(){
-            for(var e=document.querySelectorAll("[pbi-resize=powerbi]"),i=0;i<e.length;i++){
-                e[i].style.width= "100%";
+				// raise the page resize event so our script runs
+				if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
+					// work around for IE
+					var evt = document.createEvent('UIEvents');
+					evt.initUIEvent('resize', true, false, window, 0);
+					window.dispatchEvent(evt);
+				} else {
+					// other browsers
+					window.dispatchEvent(new Event('resize'));
+				}
+			}
 
-                var w = e[i].getAttribute("pbi-resize-width");
-                var h = e[i].getAttribute("pbi-resize-height");
-                var aw = e[i].clientWidth;
-                var p = w/h; 
-                var p169 = 16.0/9.0;
-                var p43 = 4.0/3.0;
-
-                debugger;
-
-                var warn = false;
-
-                if(aw < 569 && p===p169)
-                {
-                    e[i].style.width = "568.88px";
-                    e[i].style.height = 320 +56+ "px";
-                    warn = true;
-                }
-                else if(aw<=437 && p===p43)
-                {
-                    e[i].style.width = "426.66px";
-                    e[i].style.height = 320 + 56 + "px";
-                    warn = true;
-                }
-                else if (aw < 320 || aw/p < 320 || (h < 320 && p!==p169 && p!==p43 ) )
-                {
-                    var mh = Math.max(aw,320) / p;
-
-                    if(mh < 320)
-                    {
-                        e[i].style.width = 320 * p + "px";
-                        e[i].style.height = 320 + 56 + "px";
-                    }
-                    else if (aw < 320)
-                    {
-                        e[i].style.width = 320 + "px";
-                        e[i].style.height = mh + 56 + "px";
-                    }
-                    else
-                    {
-                        e[i].style.width = aw + "px";
-                        e[i].style.height = mh + 56 + "px";
-                    }
-                    warn = true;
-                }
-                else
-                {
-                    e[i].style.width= "100%";
-                    e[i].style.height = Math.max(e[i].clientWidth/p,320)+56+"px";
-                }
-
-                if(warn){
-                console.warn("pbi-resize: requested iframe dimension is below the minimum supported dimensions. Minimum supported width is 320px. Minimum supported height is 376px. Change your Power BI report page size to ensure your content looks great when embedded in your web page or blog.");
-                }
-                }
-                };
-
-        window.addEventListener("load",e); 
-        window.addEventListener("resize",e);
-        runScript = e;
-    }
-}();
-</script>
+		</script>
+		<script>
+			function handleLoadEventChange(e) {
+				var secs = document.getElementById('seconds-container');
+				if(e.value == 'seconds-timeout'){
+					secs.classList.add('visible');
+					secs.style.display = 'inline-block';
+				}
+				else {
+					secs.classList.remove('visible');
+					secs.style.display = 'none';
+				}
+			}
+		</script>
+		<script src="script.js"></script>
 </body>
 </html>
