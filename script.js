@@ -84,7 +84,6 @@
             if(img) {
                 parent.removeChild(img);
             }
-            resize();
         }
 
         function setButtonState(button, state) {
@@ -154,7 +153,7 @@
                 var contentMinWidth = e[i].getAttribute("pbi-resize-min-width");
                 var height = e[i].getAttribute('height');
                 var webImg = e[i].getAttribute('pbi-resize-img');
-                var mobileImg = e[i].getAttribute('pbi-resize-m-img');
+                var mobileImg = e[i].getAttribute('pbi-resize-m-img') || webImg;
                 var webWidth = e[i].getAttribute("pbi-resize-width");
                 var webHeight = e[i].getAttribute("pbi-resize-height");
                 var webSrc = e[i].getAttribute("pbi-resize-src");
@@ -174,8 +173,8 @@
 
                 var newSrc = !(webSrc && mobileSrc) ? webSrc : (isWebSize ? webSrc : mobileSrc);
 
-                var resizedToWeb = ((iframe && iframe.src == mobileSrc) || (img && img.src == mobileImg)) && isWebSize;
-                var resizedToMobile = ((iframe && iframe.src == webSrc) || (img && img.src == webImg)) && !isWebSize;
+                var resizedToWeb = ((iframe && iframe.src == mobileSrc) || (img && img.src == mobileImg)) && isWebSize && mobileSrc != webSrc;
+                var resizedToMobile = ((iframe && iframe.src == webSrc) || (img && img.src == webImg)) && !isWebSize && mobileSrc != webSrc;
                 var currentSrcIsImage = e[i].children.length > 1 ? true : false;
 
                 if (!currentSrc) {
@@ -251,7 +250,7 @@
                     showElement(iframe);
                 }
 
-                if (img) {
+                if (img && img.parentNode) {
                     resizeElement(img, header, actualWidth, isWebSize, webRatio, mobileRatio, webHeight, mobileHeight);
                 }
 
