@@ -6,7 +6,7 @@
         window.onmessage = function(event) {
             var isReportPageLoadedEvent = function(event) {
                 try {
-                    if (JSON.parse(event.data).event == "reportPageLoaded") {
+                    if (JSON.parse(event.data).event == "testing") {
                         return true;
                     }
                 } catch(error) {
