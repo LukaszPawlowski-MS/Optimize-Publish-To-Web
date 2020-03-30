@@ -6,7 +6,7 @@
         window.onmessage = function(event) {
             var isReportPageLoadedEvent = function(event) {
                 try {
-                    if (JSON.parse(event.data).event == "testing") {
+                    if (event && event.data && event.data.url === '/reports/undefined/events/pageChanged') {
                         return true;
                     }
                 } catch(error) {
