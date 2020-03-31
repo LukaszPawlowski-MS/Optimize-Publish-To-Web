@@ -26,12 +26,7 @@
                             case 'seconds-timeout':
                             case 'in-view':
                                 var button = getChildByTag(iframe.parentNode, 'div');
-
-                                if (button.getAttribute('data-state') === 'loadingnow') {
-                                    setButtonState(button, 'readynow');
-                                } else {
-                                    setButtonState(button, 'ready');
-                                }
+                                setButtonState(button, 'readynow');
                                 break;
                         }
                     }                    
