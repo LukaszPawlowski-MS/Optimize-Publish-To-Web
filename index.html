@@ -204,6 +204,7 @@
 		</div>
 
 		<textarea id="tFrame" style="display: none; height:300px; width:600px;">
+<script type="text/javascript">
 !function(){if("undefined"==typeof window.powerbiresizescript){window.powerbiresizescript=1;window.onmessage=function(event){var isReportPageLoadedEvent=function(event){try{if(event&&event.data&&event.data.url==='/reports/undefined/events/pageChanged'){return!0}}catch(error){return undefined}};if(isReportPageLoadedEvent(event)){var iframe=getIframeElement(event.source)
 setTimeout(function(){if(iframe&&iframe.parentNode.children.length>1){switch(iframe.parentNode.getAttribute('pbi-resize-load-event')){case 'click':showElement(iframe);break;case 'page-load':case 'seconds-timeout':case 'in-view':var button=getChildByTag(iframe.parentNode,'div');setButtonState(button,'readynow');break}}},(iframe.parentNode.getAttribute('pbi-resize-delay-show')||1)*1000)}};function getChildByTag(parent,tagName){if(parent){for(var i=0;i<parent.children.length;i++){if(parent.children[i].tagName.toLowerCase()===tagName.toLowerCase()){return parent.children[i]}}}
 return null}
@@ -252,7 +253,8 @@ function loadIframe(parent,src){var iframe=getChildByTag(parent,'iframe');var bu
                     transform: rotate(360deg);\
                 }\
             }';style.innerHTML=keyFrames;document.getElementsByTagName('head')[0].appendChild(style);iframe.setAttribute('src',src);iframe.setAttribute('frameborder','0');iframe.setAttribute('allowFullScreen','true');setButtonState(button,'loading')}}}();
-		</textarea>
+</script>
+</textarea>
 		<div id="outputContainer" style="display: none; width:70%; margin: auto;">
 			<br>
 			<h4 class="result-heading">Your Optimized Embed Code</h4>
