@@ -165,9 +165,9 @@
 						<tr class="button-customization">
 							<td class="form-cell">
 								<label for="btn-pos-left">Left: </label>
-								<input type="number" id="btn-pos-left" class="form-input" value="10" style="width:40px" />%<br>
+								<input type="number" id="btn-pos-left" class="form-input" value="6" style="width:40px" />%<br>
 								<label for="btn-pos-top">Top:  </label>
-								<input type="number" id="btn-pos-top" class="form-input" value="5" style="width:40px" />%
+								<input type="number" id="btn-pos-top" class="form-input" value="70" style="width:40px" />%
 							</td>
 						</tr>
 						<tr class="button-customization">
@@ -175,7 +175,7 @@
 						</tr>
 						<tr class="button-customization">
 							<td class="form-cell">
-								<input id="waiting-txt" class="form-input" value="Click to Interact!" style="width:400px;" />
+								<input id="waiting-txt" class="form-input" value="&#9654; Show interactive" style="width:400px;" />
 							</td>
 						</tr>
 						<tr class="button-customization">
@@ -183,7 +183,7 @@
 						</tr>
 						<tr class="button-customization">
 							<td class="form-cell">
-								<input id="loading-txt" class="form-input" value="Preparing Report..." style="width:400px;" />
+								<input id="loading-txt" class="form-input" value="Loading..." style="width:400px;" />
 							</td>
 						</tr>
 						<tr class="button-customization">
@@ -191,7 +191,7 @@
 						</tr>
 						<tr class="button-customization">
 							<td class="form-cell">
-								<input id="ready-txt" class="form-input" value="Click to Interact!" style="width:400px;" />
+								<input id="ready-txt" class="form-input" value="&#9654; Show interactive" style="width:400px;" />
 							</td>
 						</tr>
 					</table>
@@ -458,7 +458,7 @@ function loadIframe(parent,src){var iframe=getChildByTag(parent,'iframe');var bu
 						button.style.display = 'flex';
 						button.style.justifyContent = 'space-between';
 						button.style.lineHeight = '32px';
-						button.style.backgroundColor = '#EAEAEACC';
+						button.style.backgroundColor = '#f2c811';
 						button.style.position = 'absolute';
 						button.style.left = btnLeftPos + '%';
 						button.style.top = btnTopPos + '%';
@@ -467,12 +467,17 @@ function loadIframe(parent,src){var iframe=getChildByTag(parent,'iframe');var bu
 						button.style.color = 'black';
 						button.style.padding = '10px';
 						button.style.cursor = 'pointer';
-						button.style.border = 'rgb(50, 50, 50, 1) 2px solid';
+						//button.style.border = 'rgb(50, 50, 50, 1) 2px solid';
+						button.style.fontFamily = 'Arial, Helvetica, sans-serif';
+						button.style.fontSize = '1.8em';
+						button.style.minWidth = '180px';
+						button.style.borderRadius = '2px';
+						button.style.transition = 'all .1s ease-in-out';
 						button.setAttribute('pbi-resize-wait-txt', waitingText);
 						button.setAttribute('pbi-resize-load-txt', loadingText);
 						button.setAttribute('pbi-resize-rdy-txt', readyText);
-						button.setAttribute('onmouseover', "style.backgroundColor = '#EAEAEA'");
-						button.setAttribute('onmouseout', "style.backgroundColor = '#EAEAEACC'");
+						button.setAttribute('onmouseover', "style.backgroundColor = '#000000'; style.color = 'white';");
+						button.setAttribute('onmouseout', "style.backgroundColor = '#f2c811'; style.color = 'black';");
 						var spinner = document.createElement('span');
 						spinner.classList.add('pbi-resize-spinner');
 						spinner.style.display = 'none';
