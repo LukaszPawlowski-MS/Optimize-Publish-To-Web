@@ -167,7 +167,7 @@
 								<label for="btn-pos-left">Left: </label>
 								<input type="number" id="btn-pos-left" class="form-input" value="6" style="width:40px" />%<br>
 								<label for="btn-pos-top">Top:  </label>
-								<input type="number" id="btn-pos-top" class="form-input" value="76" style="width:40px" />%
+								<input type="number" id="btn-pos-top" class="form-input" value="70" style="width:40px" />%
 							</td>
 						</tr>
 						<tr class="button-customization">
@@ -194,6 +194,48 @@
 								<input id="ready-txt" class="form-input" value="&#9654; Show interactive" style="width:400px;" />
 							</td>
 						</tr>
+						<tr class="button-customization">
+							<td class="form-cell-label">Report is Ready text</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell">
+								<input id="ready-txt" class="form-input" value="&#9654; Show interactive" style="width:400px;" />
+							</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell-label">Button Default Color</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell">
+								<input id="colorDefault" class="form-input" value="#f2c811" style="width:80px;" />
+							</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell-label">Button Mouse Over Color</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell">
+								<input id="colorMouseOver" class="form-input" value="#333333" style="width:80px;" />
+							</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell-label">Button Default Text Color</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell">
+								<input id="colorTextDefault" class="form-input" value="#333333" style="width:80px;" />
+							</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell-label">Button Mouse Over Text Color</td>
+						</tr>
+						<tr class="button-customization">
+							<td class="form-cell">
+								<input id="colorTextMouseOver" class="form-input" value="#FFFFFF" style="width:80px;" />
+							</td>
+						</tr>
+
+
 					</table>
 				</div>
 			</div>
@@ -379,6 +421,10 @@ function loadIframe(parent,src){var iframe=getChildByTag(parent,'iframe');var bu
 				var waitingText = document.getElementById('waiting-txt').value;
 				var loadingText = document.getElementById('loading-txt').value;
 				var readyText = document.getElementById('ready-txt').value;
+				var colorDefaultHex= document.getElementById('colorDefault').value;
+				var colorMouseOverHex = document.getElementById('colorMouseOver').value;
+				var colorTextDefaultHex = document.getElementById('colorTextDefault').value;
+				var colorTextMouseOverHex = document.getElementById('colorTextMouseOver').value;
 
 				var mobileImg = document.getElementById('img-2').value;
 
@@ -458,13 +504,13 @@ function loadIframe(parent,src){var iframe=getChildByTag(parent,'iframe');var bu
 						button.style.display = 'flex';
 						button.style.justifyContent = 'space-between';
 						button.style.lineHeight = '32px';
-						button.style.backgroundColor = '#f2c811';
+						button.style.backgroundColor = colorDefaultHex;
 						button.style.position = 'absolute';
 						button.style.left = btnLeftPos + '%';
 						button.style.top = btnTopPos + '%';
 						button.style.marginLeft = 'auto';
 						button.style.marginRight = 'auto';
-						button.style.color = 'black';
+						button.style.color = colorTextDefaultHex;
 						button.style.padding = '10px';
 						button.style.cursor = 'pointer';
 						//button.style.border = 'rgb(50, 50, 50, 1) 2px solid';
@@ -476,8 +522,8 @@ function loadIframe(parent,src){var iframe=getChildByTag(parent,'iframe');var bu
 						button.setAttribute('pbi-resize-wait-txt', waitingText);
 						button.setAttribute('pbi-resize-load-txt', loadingText);
 						button.setAttribute('pbi-resize-rdy-txt', readyText);
-						button.setAttribute('onmouseover', "style.backgroundColor = '#000000'; style.color = 'white';");
-						button.setAttribute('onmouseout', "style.backgroundColor = '#f2c811'; style.color = 'black';");
+
+
 						var spinner = document.createElement('span');
 						spinner.classList.add('pbi-resize-spinner');
 						spinner.style.display = 'none';
@@ -486,9 +532,38 @@ function loadIframe(parent,src){var iframe=getChildByTag(parent,'iframe');var bu
 						spinner.style.margin = '1px';
 						spinner.style.marginLeft = '8px';
 						spinner.style.borderRadius = '50%';
-						spinner.style.border = '2px solid #000';
-						spinner.style.borderColor = '#000 transparent #000 transparent';
+						//spinner.style.border = '2px solid #000';
+						spinner.style.border = '2px solid ' + colorTextDefaultHex;
+						//spinner.style.borderColor = '#000 transparent #000 transparent';
+
+
+						spinner.style.borderColor = borderColorDefault 
 						spinner.style.animation = 'pbi-resize-spinner 1.2s linear infinite';
+
+						// add interactivity Prep
+						var actionSpinnerOnMouseOver = "style.borderColor = '" + borderColorMouseOver + "';";
+						var actionSpinnerOnOut = "style.borderColor = '" + borderColorDefault + "';";
+						var borderColorDefault =  colorTextDefaultHex + " transparent " + colorTextDefaultHex + " transparent";
+						var borderColorMouseOver =  colorTextMouseOverHex + " transparent " + colorTextMouseOverHex + " transparent";
+
+						// set actions
+						button.setAttribute('onmouseover', "style.backgroundColor = '" 
+										   + colorMouseOverHex 
+										   + "'; style.color = '" 
+									           + colorTextMouseOverHex 
+										   + "'; (this.getElementsByClassName('pbi-resize-spinner')[0]).style.borderColor = '" 
+										   + borderColorMouseOver + "';");
+
+						button.setAttribute('onmouseout', "style.backgroundColor = '" 
+										  + colorDefaultHex 
+										  + "'; style.color = '" 
+										  + colorTextDefaultHex 
+										  + "'; (this.getElementsByClassName('pbi-resize-spinner')[0]).style.borderColor = '" 
+										  + borderColorDefault + "';");
+
+						spinner.setAttribute('onmouseover', actionSpinnerOnMouseOver );
+						spinner.setAttribute('onmouseout', actionSpinnerOnOut );
+
 
 						button.appendChild(spinner);
 						container.appendChild(button);
