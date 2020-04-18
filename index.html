@@ -528,15 +528,14 @@ function loadIframe(parent,src){var iframe=getChildByTag(parent,'iframe');var bu
 						spinner.style.border = '2px solid ' + colorTextDefaultHex;
 						//spinner.style.borderColor = '#000 transparent #000 transparent';
 
-
-						spinner.style.borderColor = borderColorDefault 
-						spinner.style.animation = 'pbi-resize-spinner 1.2s linear infinite';
-
 						// add interactivity Prep
-						var actionSpinnerOnMouseOver = "style.borderColor = '" + borderColorMouseOver + "';";
-						var actionSpinnerOnOut = "style.borderColor = '" + borderColorDefault + "';";
 						var borderColorDefault =  colorTextDefaultHex + " transparent " + colorTextDefaultHex + " transparent";
 						var borderColorMouseOver =  colorTextMouseOverHex + " transparent " + colorTextMouseOverHex + " transparent";
+						var actionSpinnerOnMouseOver = "style.borderColor = '" + borderColorMouseOver + "';";
+						var actionSpinnerOnOut = "style.borderColor = '" + borderColorDefault + "';";
+						
+						spinner.style.borderColor = borderColorDefault; 
+						spinner.style.animation = 'pbi-resize-spinner 1.2s linear infinite';
 
 						// set actions
 						button.setAttribute('onmouseover', "style.backgroundColor = '" 
