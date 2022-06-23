@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "jest": "^23.6.0",
-    "jsdom": "^12.0.0",
+    "jsdom": "^16.5.0",
     "handlebars": ">=4.0.14",
     "lodash": ">=4.17.13",
     "mem": ">=4.0.0",
